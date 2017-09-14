@@ -9,9 +9,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity implements MainContract.View, DownloadCatImageTask.Callback {
 
+    @BindView(R.id.image_view)
     ImageView imageView;
+
+    @BindView(R.id.new_cat_button)
     Button getNewCatButton;
 
     private MainPresenter presenter;
@@ -24,8 +33,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         presenter = new MainPresenter();
         presenter.bindView(this);
 
-        imageView = (ImageView) findViewById(R.id.image_view);
-        getNewCatButton = (Button) findViewById(R.id.new_cat_button);
+        ButterKnife.bind(this);
         getNewCatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -33,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
         });
     }
+
+
+
 
     @Override
     protected void onResume() {
@@ -42,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     public void onNewCatButtonClick() {
         presenter.onNewCatButtonClick();
+
+
     }
 
     @Override
@@ -62,9 +75,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void loadImageFromUrl(String url) {
-        DownloadCatImageTask downloadCatImageTask = new DownloadCatImageTask();
-        downloadCatImageTask.setCallback(this);
-        downloadCatImageTask.execute(url);
+        Picasso.with(this).load(url).into(imageView);
+        dismissLoadingIndicator();
+
     }
 
     @Override

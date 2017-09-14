@@ -1,5 +1,9 @@
 package io.intrepid.thirdpartylibraryexcercise;
 
+import android.graphics.Bitmap;
+
+import com.squareup.picasso.Picasso;
+
 class MainPresenter implements MainContract.Presenter, GetRandomCatUrlTask.Callback {
 
     private static final String CAT_URL = "http://www.random.cat/meow";
@@ -22,6 +26,8 @@ class MainPresenter implements MainContract.Presenter, GetRandomCatUrlTask.Callb
         GetRandomCatUrlTask getRandomCatUrlTask = new GetRandomCatUrlTask();
         getRandomCatUrlTask.setCallback(this);
         getRandomCatUrlTask.execute(CAT_URL);
+
+
     }
 
     @Override
